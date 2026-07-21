@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[22016,["/_next/static/chunks/1ccst8b72eha7.js","/_next/static/chunks/151la6z1vebbn.js","/_next/static/chunks/233fjiur5ldux.js"],""]
+3:I[97367,["/_next/static/chunks/1ccst8b72eha7.js","/_next/static/chunks/151la6z1vebbn.js","/_next/static/chunks/233fjiur5ldux.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+0:{"rsc":["$","$1","c",{"children":[["$","section",null,{"className":"not-found","children":["$","div",null,{"className":"shell not-found__grid","children":[["$","p",null,{"children":"404"}],["$","div",null,{"children":[["$","span",null,{"children":"Page not found"}],["$","h1",null,{"children":["The route changed.",["$","br",null,{}],"The next decision is clear."]}],["$","p",null,{"children":"The page you requested does not exist or has moved."}],["$","$L2",null,{"className":"button button--light","href":"/","children":["Return home ",["$","svg",null,{"viewBox":"0 0 24 24","aria-hidden":"true","focusable":"false","children":["$","path",null,{"d":"M5 12h14M14 7l5 5-5 5","fill":"none","stroke":"currentColor","strokeLinecap":"round","strokeLinejoin":"round","strokeWidth":"1.7"}]}]]}]]}]]}]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"NevALkfj6U3nk0M3RNDXm"}
+5:null

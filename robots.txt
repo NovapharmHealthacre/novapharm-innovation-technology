@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://nit.novapharmhealthcare.com
+Sitemap: https://nit.novapharmhealthcare.com/sitemap.xml
