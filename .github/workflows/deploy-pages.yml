@@ -1,4 +1,4 @@
-name: Deploy website
+name: Publish website
 
 env:
   NEXT_TELEMETRY_DISABLED: 1
@@ -9,27 +9,26 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: pages
+  group: branch-pages-publish
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-publish:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Check out repository
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
           node-version: 22
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
       - name: Install pinned dependencies
         run: npm install --no-audit --no-fund
       - name: Typecheck
@@ -40,18 +39,18 @@ jobs:
         run: npm run build
       - name: Validate export
         run: npm run validate:export
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: ./out
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Sync export to branch root
+        run: |
+          cp -a out/. ./
+          touch .nojekyll
+      - name: Commit published website
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Published export is already current."
+            exit 0
+          fi
+          git commit -m "Publish generated website [skip ci]"
+          git push origin HEAD:main
