@@ -1,0 +1,11 @@
+{
+  "name": "Novapharm Innovation Technology",
+  "short_name": "NIT",
+  "description": "India-based pharmaceutical development and technology partner.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f4f6f5",
+  "theme_color": "#f4f6f5",
+  "lang": "en-IN"
+}
