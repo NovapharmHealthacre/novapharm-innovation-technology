@@ -35,4 +35,29 @@ jobs:
       - name: Build static export
         run: npm run build
       - name: Validate export
-        run: npm run validate:export
+        run: |
+          set -o pipefail
+          npm run validate:export 2>&1 | tee validation-report.txt
+      - name: Prepare export diagnostics
+        if: always()
+        run: |
+          {
+            echo "EXPORTED FILES"
+            find out -maxdepth 4 -type f | sort || true
+            echo
+            echo "CNAME"
+            if test -f out/CNAME; then cat out/CNAME; else echo "missing"; fi
+            echo
+            echo "LOGO HASHES"
+            sha256sum assets/NIT-logo.svg || true
+            sha256sum out/assets/NIT-logo.svg || true
+          } > export-diagnostics.txt
+      - name: Upload export diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: export-validation-diagnostics
+          path: |
+            validation-report.txt
+            export-diagnostics.txt
+          if-no-files-found: warn
