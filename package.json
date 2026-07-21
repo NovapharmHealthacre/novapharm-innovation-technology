@@ -1,15 +1,39 @@
 {
-  "name": "novapharm-innovation-technology-site",
-  "version": "2.0.0",
+  "name": "novapharm-innovation-technology",
+  "version": "4.0.0",
   "private": true,
-  "type": "module",
-  "description": "Dependency-free static website for Novapharm Innovation Technology.",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.0.0"
   },
   "scripts": {
-    "validate": "node scripts/validate-site.mjs",
-    "syntax": "node --check assets/js/site.js && node --check scripts/validate-site.mjs",
-    "check": "npm run syntax && npm run validate"
+    "sync:static": "node scripts/sync-static.mjs",
+    "predev": "npm run sync:static",
+    "dev": "next dev --turbopack",
+    "prebuild": "npm run sync:static",
+    "build": "next build",
+    "typecheck": "node node_modules/@typescript/native/bin/tsc --noEmit",
+    "lint": "eslint . --max-warnings=0",
+    "validate:export": "node scripts/validate-export.mjs"
+  },
+  "dependencies": {
+    "motion": "12.42.2",
+    "next": "16.2.10",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "26.1.1",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "@typescript/native": "npm:typescript@7.0.2",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.2.10",
+    "typescript": "npm:@typescript/typescript6@6.0.2"
+  },
+  "overrides": {
+    "postcss": "8.5.10"
+  },
+  "optionalDependencies": {
+    "@typescript/typescript-linux-x64": "7.0.2"
   }
 }
