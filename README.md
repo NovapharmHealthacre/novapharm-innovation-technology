@@ -1,66 +1,65 @@
-# Novapharm Innovation Technology website
+# Novapharm Innovation Technology
 
-Public website for **Novapharm Innovation Technology**, deployed at:
+A consulting-grade digital platform for an India-based pharmaceutical strategy and execution advisory firm.
 
-- https://nit.novapharmhealthcare.com
+## Positioning
 
-## Architecture
+The site is organised around the decisions pharmaceutical leadership teams need to make—not around a generic catalogue of services. The public experience connects:
 
-This is a dependency-free static website designed for GitHub Pages.
+- strategy and growth;
+- portfolio and product strategy;
+- market entry and access;
+- development, CMC and technology transfer;
+- operations, sourcing and resilience;
+- commercial readiness and launch;
+- digital, data and AI strategy; and
+- partnerships, licensing and diligence.
 
-### Public pages
+The language is intentionally evidence-led. It does not claim client scale, regulatory authority, licences, outcomes, offices, team size, or delivery capabilities that have not been substantiated.
 
-- `index.html` — homepage
-- `about.html` — company profile and operating model
-- `services.html` — pharmaceutical development capabilities
-- `markets.html` — responsible destination-market pathway planning
-- `contact.html` — transparent email-based project brief
-- `privacy.html` — website privacy notice
-- `terms.html` — website terms and professional disclaimers
-- `404.html` — branded error page
+## Technology
 
-### Shared assets
+- Next.js 16 App Router
+- React 19
+- TypeScript 7 native compiler for strict typechecking
+- TypeScript 6 API compatibility layer for the current lint/build ecosystem
+- Motion for reduced-motion-aware interaction
+- Canvas-based responsive network visualisation
+- Static export for secure, fast GitHub Pages delivery
+- Exact direct dependency versions and automated export validation
 
-- `assets/NIT-logo.svg` — official company logo; preserve without filters, recolouring, cropping or redrawing
-- `assets/css/site.css` — shared design system and responsive layout
-- `assets/js/site.js` — accessible mobile navigation, current year and enquiry-email preparation
-- `site.webmanifest` — website metadata
-- `llms.txt` — machine-readable company and scope summary
-- `sitemap.xml` and `robots.txt` — search discovery
+Browsers ultimately receive HTML, CSS and JavaScript; every web framework does that. The application source, component model, interaction logic, content system and build pipeline are TypeScript/React rather than hand-authored page-by-page HTML.
 
-## Brand rules
+## Brand integrity
 
-1. Use the supplied SVG as the primary website wordmark.
-2. Keep the logo on a clean light background.
-3. Do not manufacture a white, monochrome, square or abbreviated logo.
-4. Do not apply CSS filters to alter the logo.
-5. A compact favicon, application icon and social-sharing image require an approved brand asset from the owner.
+`assets/NIT-logo.svg` is the official repository artwork. It is copied byte-for-byte into the production export. Do not redraw, recolour, filter, crop, or reconstruct it.
 
-## Content rules
+## Local development
 
-- Do not imply that Novapharm Innovation Technology holds an approval, licence, filing role or regulated appointment unless current evidence supports the statement.
-- Do not describe a market as an active presence solely because it is under evaluation.
-- Do not publish market statistics without a named, current and reviewable source.
-- Distinguish early-stage pathway planning from formal regulatory, legal, manufacturing or laboratory responsibility.
-- Keep the India company positioned independently unless the owner explicitly approves a documented corporate relationship statement.
+```bash
+npm install
+npm run dev
+```
 
-## Contact form
+Production validation:
 
-The site is static. The form in `contact.html` does not upload or store data. JavaScript prepares a structured email addressed to `bd@novapharmhealthcare.com` in the visitor's email application.
+```bash
+npm run typecheck
+npm run lint
+npm run build
+npm run validate:export
+```
 
-If a server-side form is introduced later, update the privacy notice, security controls, retention policy and failure handling before deployment.
+These commands run TypeScript 7 typechecking, ESLint, the Next.js production build, and a link/metadata/claim/logo-integrity validator against `out/`. Direct dependency versions are pinned in `package.json`; CI performs a clean install for each run.
 
 ## Deployment
 
-The repository is intended for GitHub Pages and retains the existing `CNAME` file for `nit.novapharmhealthcare.com`.
+The repository includes `.github/workflows/deploy-pages.yml`. After the new platform is approved, the repository administrator must select:
 
-Before merging a release:
+**Settings → Pages → Build and deployment → Source → GitHub Actions**
 
-1. Review every changed claim.
-2. Confirm the official logo file is unchanged.
-3. Check all internal links.
-4. Test the mobile navigation at 320 px, 375 px and 768 px widths.
-5. Test keyboard navigation and visible focus.
-6. Submit a test enquiry and confirm the email application opens with the expected project brief.
-7. Confirm `sitemap.xml`, `robots.txt`, `llms.txt`, privacy and terms pages are publicly accessible.
-8. Verify the deployed custom domain before updating Search Console.
+The workflow then builds and publishes `out/` on pushes to `main`. The existing `CNAME` remains `nit.novapharmhealthcare.com`.
+
+## Content governance
+
+Before publishing new claims, verify the evidence and approval owner. Formal medical, legal, patent, investment, regulatory, quality, laboratory, manufacturing, clinical, or local-representation work must be described only within the actual engagement scope and delivered by appropriately qualified parties.

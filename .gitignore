@@ -1,0 +1,10 @@
+node_modules/
+.next/
+out/
+.DS_Store
+*.log
+.env*
+public/assets/
+public/google*.html
+public/BingSiteAuth.xml
+*.tsbuildinfo
