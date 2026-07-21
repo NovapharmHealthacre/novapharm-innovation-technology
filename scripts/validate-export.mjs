@@ -72,6 +72,10 @@ const hrefs = new Set();
 for (const file of htmlFiles) {
   const html = await readFile(file, "utf8");
   const relative = path.relative(out, file);
+
+  // Search-engine ownership files are token responses, not public content pages.
+  if (/^google.*\.html$/i.test(relative)) continue;
+
   if (!/<html[^>]+lang="en"/i.test(html)) fail(`${relative}: missing lang=en`);
   if (!/<main\b/i.test(html)) fail(`${relative}: missing main landmark`);
   if (!/<h1\b/i.test(html) && relative !== "404.html") fail(`${relative}: missing h1`);
