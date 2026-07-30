@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import "./globals.css";
+import { JsonLd } from "@/components/json-ld";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { site } from "@/data/site";
@@ -91,11 +91,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <SiteHeader />
         <main id="main-content">{children}</main>
         <SiteFooter />
-        <Script
-          id="organisation-schema"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organisationSchema) }}
-        />
+        <JsonLd id="organisation-schema" value={organisationSchema} />
       </body>
     </html>
   );

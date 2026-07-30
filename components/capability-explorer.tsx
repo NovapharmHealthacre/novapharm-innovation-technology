@@ -17,6 +17,7 @@ export function CapabilityExplorer() {
       <div className="capability-explorer__nav" role="tablist" aria-label="Advisory capabilities">
         {capabilities.map((capability) => (
           <button
+            type="button"
             key={capability.id}
             role="tab"
             id={`tab-${capability.id}`}

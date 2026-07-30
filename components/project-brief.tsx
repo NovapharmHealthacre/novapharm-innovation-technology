@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { type FormEvent, useMemo, useState } from "react";
 import { Copy } from "@/components/icons";
 import { site } from "@/data/site";
 

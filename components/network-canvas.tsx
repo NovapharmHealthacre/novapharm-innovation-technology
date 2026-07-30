@@ -137,5 +137,9 @@ export function NetworkCanvas() {
     };
   }, []);
 
-  return <canvas className="network-canvas" ref={canvasRef} aria-hidden="true" />;
+  return (
+    <div className="network-canvas" aria-hidden="true">
+      <canvas ref={canvasRef} />
+    </div>
+  );
 }

@@ -19,7 +19,10 @@
     :root { --header: 72px; --shell: calc(100% - 32px); }
     .brand { width: min(280px, 68vw); min-width: 0; }
     .hero__grid { padding-top: 2rem; }
-    .hero__content h1 { font-size: clamp(3.5rem, 12vw, 6.5rem); }
+    .hero__content h1, .page-hero__content h1, .article-hero__content h1, .manifesto-section h2 { font-size: 4.75rem; }
+    .section-heading h2, .horizon-intro h2, .statement-grid h2, .expertise-item__head h2, .engagement-callout h2, .cross-sector-section h2, .scope-section h2, .location-section h2, .direct-contact h2, .about-story h2, .insights-list__body h2, .site-footer__lead h2 { font-size: 4rem; }
+    .capability-explorer__panel h3 { font-size: 4rem; }
+    .geography-section__title h2 { font-size: 4.5rem; }
     .hero__bottom { grid-template-columns: 1fr; gap: 2rem; }
     .hero__rail { display: none; }
     .section-heading--split, .statement-grid, .horizon-intro, .geography-section__grid, .engagement-callout__grid, .cross-sector-section__grid, .scope-section__grid, .location-section__grid, .direct-contact__grid, .about-story__grid, .site-footer__lead { grid-template-columns: 1fr; }
@@ -38,6 +41,10 @@
     .page-hero__grid { grid-template-columns: 1fr; }
     .page-hero__meta { min-height: auto; flex-direction: row; align-items: center; border-right: 0; border-bottom: 1px solid var(--line); padding: 0 0 1.2rem; }
     .page-hero__meta > span { font-size: 2rem; }
+    .hero__content h1, .page-hero__content h1, .article-hero__content h1, .manifesto-section h2 { font-size: 3.75rem; }
+    .section-heading h2, .horizon-intro h2, .statement-grid h2, .expertise-item__head h2, .engagement-callout h2, .cross-sector-section h2, .scope-section h2, .location-section h2, .direct-contact h2, .about-story h2, .insights-list__body h2, .site-footer__lead h2 { font-size: 3.25rem; }
+    .capability-explorer__panel h3, .geography-section__title h2 { font-size: 3.5rem; }
+    .article-section h2, .sector-detail h2, .approach-step h2 { font-size: 2.75rem; }
     .expertise-item__body { margin-left: 0; grid-template-columns: 1fr 1fr; }
     .expertise-item__statement { grid-column: 1 / -1; }
     .sector-detail-grid { grid-template-columns: 1fr; }
@@ -60,7 +67,12 @@
     .hero { min-height: 920px; }
     .hero__kicker { align-items: flex-start; gap: 1rem; }
     .hero__kicker span { text-align: right; }
-    .hero__content h1 { font-size: clamp(3.4rem, 16vw, 5.8rem); }
+    .mobile-menu nav a { grid-template-columns: 36px minmax(0, 1fr); font-size: 2.25rem; }
+    .hero__content h1, .page-hero__content h1, .article-hero__content h1, .manifesto-section h2 { font-size: 2.75rem; line-height: 1; }
+    .section-heading h2, .horizon-intro h2, .statement-grid h2, .expertise-item__head h2, .engagement-callout h2, .cross-sector-section h2, .scope-section h2, .location-section h2, .direct-contact h2, .about-story h2, .insights-list__body h2, .site-footer__lead h2 { font-size: 2.5rem; line-height: 1.02; }
+    .capability-explorer__panel h3, .geography-section__title h2 { font-size: 2.75rem; }
+    .article-section h2, .sector-detail h2, .approach-step h2, .related-insights__grid h3, .insight-card__body h3 { font-size: 2.25rem; }
+    .direct-contact__email { font-size: 1.65rem; }
     .decision-grid { grid-template-columns: 1fr; }
     .decision-card { min-height: 260px; }
     .capability-explorer__nav { grid-template-columns: 1fr; }
