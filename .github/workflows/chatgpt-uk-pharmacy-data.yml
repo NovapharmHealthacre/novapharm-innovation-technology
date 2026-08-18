@@ -7,6 +7,12 @@ on:
     paths:
       - 'tools/uk_pharmacy_data/**'
       - '.github/workflows/chatgpt-uk-pharmacy-data.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'tools/uk_pharmacy_data/**'
+      - '.github/workflows/chatgpt-uk-pharmacy-data.yml'
   workflow_dispatch:
 
 permissions:
