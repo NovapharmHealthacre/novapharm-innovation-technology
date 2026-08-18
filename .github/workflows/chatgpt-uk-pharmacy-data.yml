@@ -49,18 +49,6 @@ jobs:
         run: |
           find uk_pharmacy_sources -maxdepth 1 -type f -printf '%f\t%s bytes\n' | sort || true
           test -f uk_pharmacy_sources/manifest.json && cat uk_pharmacy_sources/manifest.json || true
-          if test -f uk_pharmacy_sources/public_email_enrichment.csv; then
-            echo '--- public email enrichment summary ---'
-            python - <<'PY'
-import csv
-p='uk_pharmacy_sources/public_email_enrichment.csv'
-with open(p, encoding='utf-8-sig', newline='') as f:
-    rows=list(csv.DictReader(f))
-print('rows', len(rows), 'with_email', sum(bool(r.get('email')) for r in rows))
-from collections import Counter
-print(Counter((r.get('nation'), bool(r.get('email'))) for r in rows))
-PY
-          fi
 
       - name: Upload source bundle
         if: always()
