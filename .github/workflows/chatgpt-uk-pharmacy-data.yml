@@ -24,7 +24,7 @@ env:
 jobs:
   fetch-public-sources:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - name: Checkout temporary branch
         uses: actions/checkout@v4
@@ -34,17 +34,33 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install fetch dependency
-        run: python -m pip install --disable-pip-version-check requests
+      - name: Install fetch dependencies
+        run: python -m pip install --disable-pip-version-check requests openpyxl
 
       - name: Fetch public UK pharmacy source files
         run: python tools/uk_pharmacy_data/fetch_sources.py
+
+      - name: Enrich non-England public business emails
+        continue-on-error: true
+        run: python tools/uk_pharmacy_data/enrich_public_emails.py
 
       - name: Show bundle inventory
         if: always()
         run: |
           find uk_pharmacy_sources -maxdepth 1 -type f -printf '%f\t%s bytes\n' | sort || true
           test -f uk_pharmacy_sources/manifest.json && cat uk_pharmacy_sources/manifest.json || true
+          if test -f uk_pharmacy_sources/public_email_enrichment.csv; then
+            echo '--- public email enrichment summary ---'
+            python - <<'PY'
+import csv
+p='uk_pharmacy_sources/public_email_enrichment.csv'
+with open(p, encoding='utf-8-sig', newline='') as f:
+    rows=list(csv.DictReader(f))
+print('rows', len(rows), 'with_email', sum(bool(r.get('email')) for r in rows))
+from collections import Counter
+print(Counter((r.get('nation'), bool(r.get('email'))) for r in rows))
+PY
+          fi
 
       - name: Upload source bundle
         if: always()
