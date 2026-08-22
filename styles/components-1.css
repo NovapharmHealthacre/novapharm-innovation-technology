@@ -10,6 +10,7 @@
   }
   .eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--red); }
   .eyebrow--light { color: rgba(255,255,255,.72); }
+  .section--red .eyebrow--light { color: rgba(255,255,255,.96); }
   .eyebrow--light::before { background: var(--red-bright); }
 
   .site-header {

@@ -51,7 +51,7 @@
   .geography-section__grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.45fr .8fr; gap: clamp(4rem, 10vw, 12rem); }
   .geography-section__title h2 { margin-top: 1.5rem; font-family: var(--serif); font-size: 6rem; line-height: .94; }
   .geography-section__body { align-self: end; }
-  .geography-section__body > p { color: rgba(255,255,255,.72); }
+  .geography-section__body > p { color: rgba(255,255,255,.96); }
   .geography-section__lead { font-family: var(--serif); font-size: 2rem; line-height: 1.2; color: var(--white) !important; margin-bottom: 1.5rem; }
   .geography-section__body .arrow-link { margin-top: 3rem; }
 

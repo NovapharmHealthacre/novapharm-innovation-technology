@@ -38,7 +38,7 @@
   .expertise-item__body li::before { content: ""; position: absolute; left: 0; top: .7em; width: 4px; height: 4px; border-radius: 50%; background: var(--red-bright); }
   .engagement-callout__grid, .cross-sector-section__grid, .scope-section__grid, .location-section__grid, .direct-contact__grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: clamp(4rem, 10vw, 12rem); align-items: end; }
   .engagement-callout h2, .cross-sector-section h2, .scope-section h2, .location-section h2, .direct-contact h2 { margin-top: 1.5rem; font-size: 5rem; }
-  .engagement-callout__grid > div:last-child > p, .cross-sector-section__grid > div:last-child > p, .scope-section__grid > div:last-child > p, .location-section__grid > div:last-child > p, .direct-contact__grid > div:last-child > p { color: rgba(255,255,255,.72); }
+  .engagement-callout__grid > div:last-child > p, .cross-sector-section__grid > div:last-child > p, .scope-section__grid > div:last-child > p, .location-section__grid > div:last-child > p, .direct-contact__grid > div:last-child > p { color: rgba(255,255,255,.96); }
   .engagement-callout .button, .scope-section .button, .location-section .button { margin-top: 2rem; }
 
   .sector-detail-grid { margin-top: clamp(5rem, 9vw, 10rem); display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
