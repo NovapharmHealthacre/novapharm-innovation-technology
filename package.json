@@ -3,7 +3,7 @@
   "version": "4.0.0",
   "private": true,
   "engines": {
-    "node": ">=22.0.0"
+    "node": "24.x"
   },
   "scripts": {
     "sync:static": "node scripts/sync-static.mjs",
@@ -12,26 +12,27 @@
     "prebuild": "npm run sync:static",
     "build": "next build",
     "typecheck": "node node_modules/@typescript/native/bin/tsc --noEmit",
-    "lint": "eslint . --max-warnings=0",
+    "lint": "biome lint app components data scripts styles next.config.ts",
     "validate:export": "node scripts/validate-export.mjs"
   },
   "dependencies": {
     "motion": "12.42.2",
-    "next": "16.2.10",
-    "react": "19.2.7",
-    "react-dom": "19.2.7"
+    "next": "16.2.12",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "@types/node": "26.1.1",
+    "@types/node": "24.13.3",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
+    "@biomejs/biome": "2.5.6",
     "@typescript/native": "npm:typescript@7.0.2",
-    "eslint": "9.39.5",
-    "eslint-config-next": "16.2.10",
     "typescript": "npm:@typescript/typescript6@6.0.2"
   },
   "overrides": {
-    "postcss": "8.5.10"
+    "nanoid": "3.3.18",
+    "postcss": "8.5.25",
+    "sharp": "0.35.3"
   },
   "optionalDependencies": {
     "@typescript/typescript-linux-x64": "7.0.2"

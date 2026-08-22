@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { type KeyboardEvent, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { capabilities } from "@/data/site";
 import { ArrowRight } from "@/components/icons";
@@ -10,19 +10,45 @@ export function CapabilityExplorer() {
   const active = capabilities.find((item) => item.id === activeId) ?? capabilities[0];
   const reduceMotion = useReducedMotion();
 
+  const selectFromKeyboard = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const lastIndex = capabilities.length - 1;
+    const nextIndex = event.key === "Home"
+      ? 0
+      : event.key === "End"
+        ? lastIndex
+        : event.key === "ArrowRight" || event.key === "ArrowDown"
+          ? index === lastIndex ? 0 : index + 1
+          : event.key === "ArrowLeft" || event.key === "ArrowUp"
+            ? index === 0 ? lastIndex : index - 1
+            : null;
+
+    if (nextIndex === null) return;
+    event.preventDefault();
+    const next = capabilities[nextIndex];
+    if (!next) return;
+    setActiveId(next.id);
+    event.currentTarget.parentElement
+      ?.querySelectorAll<HTMLButtonElement>("[role='tab']")
+      .item(nextIndex)
+      .focus();
+  };
+
   if (!active) return null;
 
   return (
     <div className="capability-explorer">
       <div className="capability-explorer__nav" role="tablist" aria-label="Advisory capabilities">
-        {capabilities.map((capability) => (
+        {capabilities.map((capability, index) => (
           <button
+            type="button"
             key={capability.id}
             role="tab"
             id={`tab-${capability.id}`}
             aria-controls={`panel-${capability.id}`}
             aria-selected={active.id === capability.id}
+            tabIndex={active.id === capability.id ? 0 : -1}
             onClick={() => setActiveId(capability.id)}
+            onKeyDown={(event) => selectFromKeyboard(event, index)}
           >
             <span>{capability.index}</span>
             <strong>{capability.title}</strong>
@@ -33,7 +59,7 @@ export function CapabilityExplorer() {
 
       <div className="capability-explorer__panel-wrap">
         <AnimatePresence mode="wait">
-          <motion.article
+          <motion.div
             className="capability-explorer__panel"
             key={active.id}
             role="tabpanel"
@@ -62,7 +88,7 @@ export function CapabilityExplorer() {
                 </ul>
               </div>
             </div>
-          </motion.article>
+          </motion.div>
         </AnimatePresence>
       </div>
     </div>

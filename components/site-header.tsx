@@ -15,6 +15,7 @@ export function SiteHeader() {
   const [openedAtPath, setOpenedAtPath] = useState(pathname);
   const [scrolled, setScrolled] = useState(false);
   const reduceMotion = useReducedMotion();
+  const darkHeroAtTop = pathname === "/" || /^\/insights\/[^/]+\/?$/.test(pathname);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 18);
@@ -31,7 +32,7 @@ export function SiteHeader() {
   }, [menuOpen]);
 
   return (
-    <header className={`site-header${scrolled ? " is-scrolled" : ""}`}>
+    <header className={`site-header${darkHeroAtTop ? " has-dark-hero" : ""}${scrolled ? " is-scrolled" : ""}`}>
       <div className="site-header__inner shell">
         <Brand />
         <nav className="site-header__nav" aria-label="Primary navigation">

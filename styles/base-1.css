@@ -35,7 +35,7 @@
   ::selection { background: var(--red); color: var(--white); }
   :focus-visible { outline: 2px solid var(--red-bright); outline-offset: 4px; }
   em { font-family: var(--serif); font-weight: 400; }
-  h1, h2, h3, h4 { font-weight: 500; line-height: 0.98; letter-spacing: -0.035em; }
+  h1, h2, h3, h4 { font-weight: 500; line-height: 0.98; letter-spacing: 0; overflow-wrap: anywhere; }
   p { text-wrap: pretty; }
   main { min-height: 60vh; }
   .shell { width: var(--shell); margin-inline: auto; }

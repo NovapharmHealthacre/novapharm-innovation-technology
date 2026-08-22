@@ -49,6 +49,14 @@ if (await exists(sourceLogo) && await exists(exportedLogo)) {
   if (sha256(source) !== sha256(exported)) fail("Official NIT logo changed during export");
 }
 
+const stylesRoot = path.join(root, "styles");
+for (const entry of await readdir(stylesRoot, { withFileTypes: true })) {
+  if (!entry.isFile() || !entry.name.endsWith(".css")) continue;
+  const css = await readFile(path.join(stylesRoot, entry.name), "utf8");
+  if (/font-size\s*:[^;]*(?:vw|cqw)/i.test(css)) fail(`${entry.name}: viewport-scaled typography is not permitted`);
+  if (/letter-spacing\s*:\s*-/i.test(css)) fail(`${entry.name}: negative letter spacing is not permitted`);
+}
+
 const restricted = [
   /active presence across seven markets/i,
   /70\+ years/i,
@@ -86,6 +94,10 @@ for (const file of htmlFiles) {
   for (const match of html.matchAll(/href="(\/[^"#?]*)/g)) hrefs.add(match[1]);
 }
 
+const homepage = await readFile(path.join(out, "index.html"), "utf8");
+if (!homepage.includes("site-header has-dark-hero")) fail("Homepage does not expose the dark-hero navigation contrast state");
+if (!homepage.includes('type="button"') || !homepage.includes('aria-label="Open navigation"')) fail("Homepage mobile navigation control is incomplete");
+
 for (const href of hrefs) {
   if (href.startsWith("/_next/") || href.startsWith("/assets/")) continue;
   const clean = href.replace(/^\//, "").replace(/\/$/, "");
@@ -103,7 +115,7 @@ if (await exists(path.join(out, "sitemap.xml"))) {
 }
 
 if (failures.length) {
-  console.error("Export validation failed:\n" + failures.map((item) => `- ${item}`).join("\n"));
+  console.error(`Export validation failed:\n${failures.map((item) => `- ${item}`).join("\n")}`);
   process.exit(1);
 }
 console.log(`Export validation passed: ${htmlFiles.length} HTML documents, ${hrefs.size} internal links.`);

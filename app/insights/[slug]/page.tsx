@@ -2,6 +2,7 @@ import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "@/components/icons";
+import { JsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
 import { getInsight, insights, site } from "@/data/site";
 
@@ -106,7 +107,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <JsonLd id={`article-schema-${insight.slug}`} value={articleSchema} />
     </>
   );
 }

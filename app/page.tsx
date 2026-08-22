@@ -98,15 +98,15 @@ export default function HomePage() {
             </p>
           </Reveal>
 
-          <div className="horizon-map" aria-label="Pharmaceutical value chain advisory">
+          <ol className="horizon-map" aria-label="Pharmaceutical value chain advisory">
             {["Opportunity", "Portfolio", "Development", "Transfer", "Access", "Launch", "Scale"].map((stage, index) => (
-              <Reveal className="horizon-map__stage" delay={index * 0.04} key={stage}>
+              <Reveal as="li" className="horizon-map__stage" delay={index * 0.04} key={stage}>
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 <strong>{stage}</strong>
               </Reveal>
             ))}
-            <div className="horizon-map__line" aria-hidden="true"><span /></div>
-          </div>
+            <li className="horizon-map__line" aria-hidden="true"><span /></li>
+          </ol>
         </div>
       </section>
 
