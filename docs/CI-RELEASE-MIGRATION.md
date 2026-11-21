@@ -12,3 +12,7 @@ This draft candidate replaces direct source mutation with **manual exact-SHA, ow
 4. On first migration, verify `https://nit.novapharmhealthcare.com/` and important routes, assets, CNAME, and CSS in an independent browser, and retain a previous known-good source and rollback path.
 
 This PR is **not permission** to deploy, does not enable native app or AI cloud access, and makes no independent Apple HIG/SEO/production acceptance claim.
+
+## Ruleset-as-code import proposal
+
+The proposed, **disabled** GitHub ruleset is now version-controlled at `config/ci/ruleset-proposals/nit-main.json`, verified by `scripts/verify-nit-ci-release-contract.mjs`. The two required status contexts are `validate` (the unconditional Site quality job) and `NIT source, Google, web-quality and non-publishing release gate`. This proposal is **not installed or enforced** by checking the file into Git; an authorized administrator must import and activate it in repository Settings → Rules after verifying the real required-check names and the Pages migration. It requires pull requests but does not assert independent review (approvals required: zero). The migration requires a controlled publisher cutover and live smoke checks before the ruleset can be counted as active production governance.
