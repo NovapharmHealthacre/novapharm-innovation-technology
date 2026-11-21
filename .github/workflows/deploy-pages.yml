@@ -1,59 +1,87 @@
-name: Publish website
+name: Publish approved NIT website artifact
+
+on:
+  workflow_dispatch:
+    inputs:
+      expected_sha:
+        description: Exact reviewed main commit SHA; staging or PR SHA is not release approval
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: nit-approved-pages-release
+  cancel-in-progress: false
 
 env:
   NEXT_TELEMETRY_DISABLED: 1
 
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
-concurrency:
-  group: branch-pages-publish
-  cancel-in-progress: false
-
 jobs:
-  build-and-publish:
-    if: github.actor != 'github-actions[bot]'
+  verify-and-package:
+    name: Verify NIT release and build immutable site artifact
+    if: github.repository == 'NovapharmHealthacre/novapharm-innovation-technology' && github.ref == 'refs/heads/main' && vars.NIT_PRODUCTION_RELEASE_APPROVED == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
-      - name: Check out repository
+      - name: Check out exact reviewed source (no branch writes)
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
-          fetch-depth: 0
-      - name: Set up Node.js
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Refuse unreviewed, stale or malformed release identity
+        shell: bash
+        env:
+          EXPECTED_SHA: ${{ inputs.expected_sha }}
+        run: |
+          set -euo pipefail
+          [[ "$EXPECTED_SHA" =~ ^[0-9a-f]{40}$ ]]
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          test "$GITHUB_SHA" = "$EXPECTED_SHA"
+          test "$(git ls-remote origin refs/heads/main | cut -f1)" = "$EXPECTED_SHA"
+      - name: Set up Node.js 24
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 24
           cache: npm
-      - name: Install pinned dependencies
-        run: npm ci --ignore-scripts
-      - name: Audit dependencies
-        run: npm audit --audit-level=high
-      - name: Typecheck
-        run: npm run typecheck
-      - name: Lint
-        run: npm run lint
-      - name: Build static export
-        run: npm run build
-      - name: Validate export
-        run: npm run validate:export
-      - name: Sync export to branch root
+      - name: Clean install and block high-severity dependency vulnerabilities
+        run: npm ci --ignore-scripts && npm audit --audit-level=high
+      - name: Independent export, type, lint, web and corporate claims validation
         run: |
-          cp -a out/. ./
-          touch .nojekyll
-      - name: Commit published website
+          npm run typecheck
+          npm run lint
+          npm run build
+          npm run validate:export
+          node --test scripts/test-nit-ci-release-contract.mjs
+      - name: Ensure complete custom-domain artifact
+        shell: bash
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "Published export is already current."
-            exit 0
-          fi
-          git commit -m "Publish generated website [skip ci]"
-          git push origin HEAD:main
+          set -euo pipefail
+          test -s out/index.html
+          test -s out/robots.txt
+          test -s out/sitemap.xml
+          test -s out/CNAME
+          test "$(tr -d '\r\n' < out/CNAME)" = "nit.novapharmhealthcare.com"
+          touch out/.nojekyll
+      - name: Configure secure GitHub Pages artifact publication
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - name: Upload approved site artifact without touching main
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: out
+
+  deploy:
+    name: Deploy approved NIT GitHub Pages artifact
+    needs: verify-and-package
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish only the previously verified artifact
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
