@@ -20,6 +20,24 @@ export function verifyNitRelease() {
   assert.doesNotMatch(deploy,/\bpush:\s*\n\s*branches:\s*\[main\]/,"No automatic branch-push deployment");
   assert.doesNotMatch(deploy,/git push|git add -A|contents: write/,"Publisher must not write a source branch");
   assert.match(read("CNAME"), /nit\.novapharmhealthcare\.com/);
+  // Source-controlled ruleset is an import proposal, not effective GitHub protection.
+  const proposed=JSON.parse(read("config/ci/ruleset-proposals/nit-main.json"));
+  assert.equal(proposed.target,"branch");
+  assert.equal(proposed.enforcement,"disabled","Repository admin, not CI, activates branch rules");
+  assert.deepEqual(proposed.bypass_actors,[]);
+  assert.deepEqual(proposed.conditions.ref_name.include,["refs/heads/main"]);
+  assert.deepEqual(proposed.rules.map(x=>x.type),["deletion","non_fast_forward","pull_request","required_status_checks"]);
+  assert.equal(proposed.rules.find(x=>x.type==="pull_request").parameters.required_approving_review_count,0);
+  const required=proposed.rules.find(x=>x.type==="required_status_checks").parameters;
+  assert.equal(required.strict_required_status_checks_policy,true);
+  assert.deepEqual(required.required_status_checks.map(x=>x.context),[
+    "validate","NIT source, Google, web-quality and non-publishing release gate"
+  ]);
+  const releaseCi=read(".github/workflows/nit-ci-release-gate.yml");
+  assert.match(releaseCi,/pull_request:\s*\n  push:\s*\n    branches: \[main\]/);
+  assert.ok(releaseCi.includes("name: NIT source, Google, web-quality and non-publishing release gate"));
+  assert.ok(ci.includes("name: validate") || ci.includes("validate:"),
+    "NIT Site quality check job 'validate' must exist");
   return {siteQuality:true,exportArtifact:true,ownerApprovedOnly:true,sourceBranchWrites:false};
 }
 if(process.argv[1] && fileURLToPath(import.meta.url)===fileURLToPath(new URL("test-nit-ci-release-contract.mjs",import.meta.url))) {
