@@ -3,7 +3,7 @@
 
   .decision-section { border-top: 1px solid var(--line); }
   .decision-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
-  .decision-card { position: relative; min-height: 330px; padding: 1.5rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; transition: background .35s ease, color .35s ease; }
+  .decision-card { position: relative; min-height: 330px; padding: 1.5rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; transition: background var(--np-motion-fast) var(--ease-out), color var(--np-motion-fast) var(--ease-out); }
   .decision-card::before { content: ""; position: absolute; inset: 100% 0 0; background: var(--red); transition: inset .45s var(--ease-out); }
   .decision-card > * { position: relative; z-index: 1; }
   .decision-card > span { font-size: .68rem; letter-spacing: .15em; color: var(--red); }
@@ -43,7 +43,7 @@
   .horizon-map__stage span { font-size: .62rem; color: var(--red); letter-spacing: .15em; }
   .horizon-map__stage strong { writing-mode: vertical-rl; transform: rotate(180deg); font-size: .8rem; font-weight: 600; letter-spacing: .08em; }
   .horizon-map__line { position: absolute; left: 0; right: 0; top: 48%; height: 1px; background: var(--line); }
-  .horizon-map__line span { position: absolute; top: -5px; left: 0; width: 11px; height: 11px; border-radius: 50%; background: var(--red); animation: horizon 9s linear infinite; }
+  .horizon-map__line span { position: absolute; top: -5px; left: 0; width: 11px; height: 11px; border-radius: 50%; background: var(--red); animation: none; }
   @keyframes horizon { to { left: calc(100% - 11px); } }
 
   .geography-section { overflow: hidden; }
@@ -56,7 +56,7 @@
   .geography-section__body .arrow-link { margin-top: 3rem; }
 
   .sector-list { border-top: 1px solid var(--line); }
-  .sector-row { min-height: 160px; display: grid; grid-template-columns: 50px minmax(220px, .8fr) minmax(300px, 1.2fr) 30px; gap: 2rem; align-items: center; border-bottom: 1px solid var(--line); transition: padding .35s var(--ease-out), background .35s ease; }
+  .sector-row { min-height: 160px; display: grid; grid-template-columns: 50px minmax(220px, .8fr) minmax(300px, 1.2fr) 30px; gap: 2rem; align-items: center; border-bottom: 1px solid var(--line); transition: background var(--np-motion-fast) var(--ease-out); }
   .sector-row > span { color: var(--red); font-size: .65rem; letter-spacing: .15em; }
   .sector-row h3 { font-family: var(--serif); font-size: 2rem; }
   .sector-row p { color: var(--muted); max-width: 650px; }
