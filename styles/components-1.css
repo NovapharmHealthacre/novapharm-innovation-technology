@@ -80,7 +80,7 @@
   .button--dark:hover { background: var(--red); }
   .button--red { background: var(--red); color: var(--white); }
   .button--red:hover { background: var(--red-deep); }
-  .button--ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+  .button--ghost { background: transparent; color: var(--ink); border-color: var(--line-control); }
   .button--ghost svg { width: 17px; }
   .text-link { display: inline-flex; align-items: center; gap: .5rem; font-size: .78rem; font-weight: 620; }
   .text-link svg { width: 18px; }
