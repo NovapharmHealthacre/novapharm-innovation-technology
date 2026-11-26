@@ -41,9 +41,9 @@
   .project-brief label { display: flex; flex-direction: column; gap: .8rem; padding: 1.5rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .project-brief label:nth-child(even) { border-right: 0; }
   .project-brief label > span { font-size: .64rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
-  .project-brief input, .project-brief textarea { width: 100%; border: 0; border-bottom: 1px solid transparent; background: transparent; color: var(--ink); padding: .4rem 0; border-radius: 0; resize: vertical; }
-  .project-brief input:focus, .project-brief textarea:focus { outline: 0; border-bottom-color: var(--red); }
-  .project-brief textarea::placeholder, .project-brief input::placeholder { color: #9a9c9f; }
+  .project-brief input, .project-brief textarea { width: 100%; border: 0; border-bottom: 1px solid var(--line-control); background: transparent; color: var(--ink); padding: .4rem 0; min-height: 44px; border-radius: 0; resize: vertical; }
+  .project-brief input:focus, .project-brief textarea:focus { outline: 2px solid var(--red); outline-offset: 3px; border-bottom-color: var(--red); }
+  .project-brief textarea::placeholder, .project-brief input::placeholder { color: #595961; }
   .project-brief__wide { grid-column: 1 / -1; border-right: 0 !important; }
   .project-brief__actions { display: flex; align-items: center; gap: 1rem; padding: 1.5rem; }
   .project-brief__actions > p { margin-left: auto; max-width: 430px; color: var(--muted); font-size: .72rem; text-align: right; }
